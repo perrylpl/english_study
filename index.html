@@ -3,20 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>我的第一个编程游戏</title>
+    <title>编程英语学习工具</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
             text-align: center;
             background: linear-gradient(135deg, #2d3436 0%, #1a1a1a 100%);
-            color: #ecf0f1;
+            color: #bdc3c7;
             margin: 0;
             padding: 20px;
             min-height: 100vh;
         }
         
         .container {
-            max-width: 600px;
+            max-width: 800px;
             margin: 0 auto;
             background: rgba(0, 0, 0, 0.2);
             border-radius: 20px;
@@ -25,83 +25,137 @@
         }
         
         h1 {
-            color: #ffd700;
+            color: #fdcb6e;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
             margin-bottom: 30px;
         }
         
-        .score {
-            font-size: 24px;
+        .learning-section {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            padding: 20px;
             margin: 20px 0;
-            color: #ffd700;
+            text-align: left;
         }
         
-        .game-button {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            border: none;
-            background: linear-gradient(45deg, #ff6b6b, #ffa500);
-            color: white;
-            font-size: 18px;
-            font-weight: bold;
+        .word-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px 0;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
-            margin: 20px;
+            border-left: 5px solid #fdcb6e;
         }
         
-        .game-button:hover {
-            transform: scale(1.1);
-            box-shadow: 0 12px 24px rgba(0,0,0,0.4);
+        .word-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
         }
         
-        .game-button:active {
-            transform: scale(0.95);
+        .english-word {
+            font-size: 24px;
+            font-weight: bold;
+            color: #fdcb6e;
+            margin-bottom: 5px;
         }
         
-        .controls {
-            margin: 20px 0;
+        .chinese-meaning {
+            font-size: 16px;
+            color: #ecf0f1;
         }
         
-        .control-button {
-            background: #27ae60;
+        .pronunciation {
+            font-size: 14px;
+            color: #68a0d9;
+            font-style: italic;
+        }
+        
+        .button {
+            background: #00b894;
             color: white;
             border: none;
-            padding: 10px 20px;
-            margin: 5px;
+            padding: 12px 24px;
+            margin: 10px;
             border-radius: 25px;
             cursor: pointer;
             font-size: 16px;
-            transition: background 0.3s;
+            transition: all 0.3s;
         }
         
-        .control-button:hover {
-            background: #229954;
+        .button:hover {
+            background: #00a085;
+            transform: scale(1.05);
         }
         
-        .explanation {
+        .quiz-section {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .quiz-question {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: #fdcb6e;
+        }
+        
+        .quiz-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .quiz-option {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: #ecf0f1;
+        }
+        
+        .quiz-option:hover {
+            border-color: #fdcb6e;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .quiz-option.correct {
+            background: #27ae60;
+            border-color: #27ae60;
+            color: white;
+        }
+        
+        .quiz-option.wrong {
+            background: #c0392b;
+            border-color: #c0392b;
+            color: white;
+        }
+        
+        .score-display {
+            font-size: 18px;
+            color: #fdcb6e;
+            margin: 20px 0;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 20px;
             background: rgba(0, 0, 0, 0.3);
             border-radius: 10px;
-            padding: 20px;
-            margin-top: 30px;
-            text-align: left;
+            overflow: hidden;
+            margin: 10px 0;
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
         
-        .explanation h3 {
-            color: #ffd700;
-            margin-top: 0;
-        }
-        
-        .code-example {
-            background: rgba(0, 0, 0, 0.5);
-            border-radius: 5px;
-            padding: 10px;
-            font-family: 'Courier New', monospace;
-            margin: 10px 0;
-            overflow-x: auto;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00b894, #00cec9);
+            transition: width 0.3s ease;
         }
 
         /* Custom Modal Styles */
@@ -147,101 +201,165 @@
 </head>
 <body>
     <div class="container">
-        <h1>🎮 我的第一个编程游戏</h1>
+        <h1>🌍 编程英语学习工具</h1>
         
-        <div class="score">
-            分数: <span id="score">0</span>
+        <div class="score-display">
+            今日目标: <span id="progress">0</span>%
+            <span style="font-size: 14px; color: #aaa; margin-left: 15px;">(总学习进度: <span id="overallProgress">0</span>%)</span>
         </div>
         
-        <button class="game-button" id="clickButton" onclick="addScore()">
-            点击我！
-        </button>
-        
-        <div class="controls">
-            <button class="control-button" onclick="resetScore()">重置分数</button>
-            <button class="control-button" onclick="changeColor()">改变颜色</button>
-            <button class="control-button" onclick="showMessage()">显示消息</button>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressBar" style="width: 0%"></div>
         </div>
+
+        <div id="dailyWordsSection"></div>
         
-        <div class="explanation">
-            <h3>🧠 编程小知识</h3>
-            <p>这个游戏展示了编程的基本概念：</p>
-            <ul>
-                <li><strong>变量</strong> - 分数存储在一个变量中</li>
-                <li><strong>函数</strong> - 点击按钮时调用函数</li>
-                <li><strong>事件</strong> - 按钮点击是一个事件</li>
-                <li><strong>DOM操作</strong> - 改变网页上的内容</li>
-            </ul>
-            
-            <h3>💻 代码示例</h3>
-            <div class="code-example">
-                function addScore() {<br>
-                &nbsp;&nbsp;score = score + 1;<br>
-                &nbsp;&nbsp;document.getElementById('score').textContent = score;<br>
-                }
+        <div class="learning-section" style="text-align: center;">
+            <h2>🎯 准备好测验了吗?</h2>
+            <p>随时检验你的学习成果！</p>
+            <div>
+                <button class="button" onclick="startDailyQuiz()">今日单词测验</button>
             </div>
-            
-            <p>这段代码的意思是：当函数被调用时，分数加1，然后更新网页上显示的分数。</p>
+        </div>
+
+        <div class="learning-section">
+            <h2>💡 学习技巧</h2>
+            <ul>
+                <li><strong>循序渐进</strong> - 从简单难度的单词开始学习。</li>
+                <li><strong>重复记忆</strong> - 多次点击单词卡片来加深印象。</li>
+                <li><strong>参加测验</strong> - 通过测验来检验你的学习成果。</li>
+                <li><strong>实践应用</strong> - 尝试在编程时使用这些英文单词。</li>
+            </ul>
         </div>
     </div>
 
     <div id="customModal" class="modal">
         <div class="modal-content">
             <p id="modalMessage"></p>
-            <button class="control-button" onclick="closeModal()">好的</button>
+            <button class="button" onclick="closeModal()">好的</button>
         </div>
     </div>
 
+    <script src="words.js"></script>
     <script>
-        // 变量：存储分数
-        let score = 0;
-        
-        // 函数：增加分数
-        function addScore() {
-            score = score + 1;
-            document.getElementById('score').textContent = score;
+        let learnedWords = new Set();
+
+        // 获取 "今日单词"
+        function getDailyWords() {
+            const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
+            const storedDailyWords = JSON.parse(localStorage.getItem('dailyWords'));
+
+            if (storedDailyWords && storedDailyWords.date === today) {
+                return storedDailyWords.words;
+            }
+
+            const now = new Date();
+            const start = new Date(now.getFullYear(), 0, 0);
+            const diff = now - start;
+            const oneDay = 1000 * 60 * 60 * 24;
+            const dayOfYear = Math.floor(diff / oneDay);
+
+            const easyWords = programmingWords.filter(w => w.difficulty === 'easy');
             
-            // 添加一些动画效果
-            const button = document.getElementById('clickButton');
-            button.style.transform = 'scale(1.2)';
-            setTimeout(() => {
-                button.style.transform = 'scale(1)';
-            }, 100);
+            // 每天从简单词汇中选两个
+            const dailyWord1 = easyWords[(dayOfYear * 2) % easyWords.length];
+            const dailyWord2 = easyWords[(dayOfYear * 2 + 1) % easyWords.length];
+
+            const dailyWordIndices = [
+                programmingWords.indexOf(dailyWord1),
+                programmingWords.indexOf(dailyWord2)
+            ].filter(index => index !== -1); // 过滤掉没找到的单词
+
+            localStorage.setItem('dailyWords', JSON.stringify({ date: today, words: dailyWordIndices }));
+            return dailyWordIndices;
+        }
+
+        // 显示 "今日单词"
+        function displayDailyWords() {
+            const dailyWordsSection = document.getElementById('dailyWordsSection');
+            const dailyWordIndices = getDailyWords();
+            
+            const wordCardsHTML = dailyWordIndices.map(index => {
+                const word = programmingWords[index];
+                if (!word) return ''; // 安全检查
+                return `
+                    <div class="word-card" onclick="learnWord(${index})">
+                        <div class="english-word">${word.english}</div>
+                        <div class="chinese-meaning">${word.chinese}</div>
+                        <div class="pronunciation">${word.pronunciation}</div>
+                        <div style="font-size: 12px; color: #ddd; margin-top: 5px;">${word.category}</div>
+                    </div>
+                `;
+            }).join('');
+
+            dailyWordsSection.innerHTML = `
+                <div class="learning-section">
+                    <h2>🌟 今日单词</h2>
+                    ${wordCardsHTML}
+                </div>
+            `;
+        }
+
+        // 学习单词
+        function learnWord(index) {
+            const word = programmingWords[index];
+            showModal(`学习单词: <strong>${word.english}</strong><br><br>中文: ${word.chinese}<br>发音: ${word.pronunciation}<br>类别: ${word.category}`);
+            
+            if (!learnedWords.has(index)) {
+                learnedWords.add(index);
+                updateDisplays();
+            }
+        }
+
+        // 开始测验
+        function startDailyQuiz() {
+            const dailyWordIndices = getDailyWords();
+            if (dailyWordIndices.length > 0) {
+                window.location.href = `quiz.html?words=${dailyWordIndices.join(',')}`;
+            } else {
+                showModal("今日单词还未生成，请刷新页面。");
+            }
+        }
+
+        // 更新所有进度显示
+        function updateDisplays() {
+            // 1. 更新每日进度
+            const today = new Date().toISOString().slice(0, 10);
+            const dailyQuizState = JSON.parse(localStorage.getItem('dailyQuizState'));
+            let dailyProgress = 0;
+
+            if (dailyQuizState && dailyQuizState.date === today && dailyQuizState.total > 0) {
+                dailyProgress = Math.round((dailyQuizState.answered / dailyQuizState.total) * 100);
+            }
+            
+            document.getElementById('progress').textContent = dailyProgress;
+            document.getElementById('progressBar').style.width = dailyProgress + '%';
+
+            // 2. 更新总学习进度
+            const savedLearnedWords = localStorage.getItem('learnedWords');
+            if (savedLearnedWords) {
+                learnedWords = new Set(JSON.parse(savedLearnedWords));
+            }
+            const overallProgress = Math.round((learnedWords.size / programmingWords.length) * 100);
+            document.getElementById('overallProgress').textContent = overallProgress;
+            
+            // 3. 保存总学习进度
+            localStorage.setItem('learnedWords', JSON.stringify(Array.from(learnedWords)));
         }
         
-        // 函数：重置分数
-        function resetScore() {
-            score = 0;
-            document.getElementById('score').textContent = score;
-            showModal('分数已重置为0！');
+        // 从本地存储加载进度
+        function loadProgress() {
+            const savedLearnedWords = localStorage.getItem('learnedWords');
+            if (savedLearnedWords) {
+                learnedWords = new Set(JSON.parse(savedLearnedWords));
+            }
         }
-        
-        // 函数：改变按钮颜色
-        function changeColor() {
-            const button = document.getElementById('clickButton');
-            const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#feca57'];
-            const randomColor = colors[Math.floor(Math.random() * colors.length)];
-            button.style.background = `linear-gradient(45deg, ${randomColor}, #ffa500)`;
-        }
-        
-        // 函数：显示消息
-        function showMessage() {
-            const messages = [
-                '你真棒！',
-                '继续加油！',
-                '编程很有趣吧？',
-                '你正在学习编程！',
-                '点击按钮继续游戏！'
-            ];
-            const randomMessage = messages[Math.floor(Math.random() * messages.length)];
-            showModal(randomMessage);
-        }
-        
-        // 页面加载完成后的欢迎消息
+
+        // 页面加载时初始化
         window.onload = function() {
-            setTimeout(() => {
-                showModal('欢迎来到编程世界！<br>点击按钮开始游戏吧！');
-            }, 500);
+            loadProgress();
+            displayDailyWords();
+            updateDisplays();
         };
 
         // --- Custom Modal Functions ---
